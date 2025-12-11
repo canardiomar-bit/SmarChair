@@ -1370,7 +1370,7 @@
   });
 
   exitBtn?.addEventListener("click", () => {
-    window.location.href = "main.html";
+    window.location.href = "index.html";
   });
 
   playAgainBtns.forEach((b) => b.addEventListener("click", resetAll));
