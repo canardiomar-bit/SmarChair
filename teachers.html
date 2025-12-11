@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Study First – Teachers Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- main design css mo -->
+  <link rel="stylesheet" href="design.css" />
+</head>
+<body>
+  <!-- ginagamit na ng app.js para sa background -->
+  <div id="pageRoot" class="page">
+    <div class="tdTop">
+      <!-- Top-left Home button -->
+      <a class="homePill" href="main.html">
+        <span class="homePill__icon">🏠</span>
+        <span>Home</span>
+      </a>
+
+      <div class="howTitle tdBrand">
+        <span class="howTitle__emoji">🧑‍🏫</span>
+        <span class="howTitle__text">Teachers Dashboard</span>
+      </div>
+    </div>
+
+    <!-- MAIN WRAPPER -->
+    <main id="teachersRoot" class="tdShell">
+
+      <!-- SELECT GAME CARD -->
+      <section class="tdCard tdCard--top">
+        <div class="tdCardHeader">
+          <div class="tdCardIcon">🎮</div>
+          <h2 class="tdCardTitle">Select Game</h2>
+        </div>
+
+        <div class="tdGameRow">
+          <button
+            type="button"
+            class="tdGameBtn tdGameBtn--active"
+            data-td-game="reading-race"
+          >
+            <span class="tdGameEmoji">🚗</span>
+            <span class="tdGameLabel">Reading Race</span>
+          </button>
+
+          <button
+            type="button"
+            class="tdGameBtn"
+            data-td-game="quiz-quest"
+          >
+            <span class="tdGameEmoji">🎲</span>
+            <span class="tdGameLabel">Quiz Quest</span>
+          </button>
+
+          <button
+            type="button"
+            class="tdGameBtn"
+            data-td-game="word-reveal"
+          >
+            <span class="tdGameEmoji">🔤</span>
+            <span class="tdGameLabel">Word Reveal</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ADD NEW QUESTION BUTTON -->
+      <section class="tdCard tdCard--center">
+        <div style="display:flex;gap:10px;align-items:center;justify-content:center;">
+          <button id="tdAddBtn" type="button" class="tdAddBtn">
+            <span class="tdAddPlus">+</span>
+            <span>Add New Question</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ADD QUESTION CARD (HIDDEN BY DEFAULT) -->
+      <section id="tdAddSection" class="tdCard rrHidden">
+        <div class="tdCardHeader">
+          <div class="tdCardIcon">✏️</div>
+          <h2 id="tdAddTitle" class="tdCardTitle">
+            Add Question - Reading Race
+          </h2>
+        </div>
+
+        <!-- READING RACE FORM -->
+        <form id="tdFormReadingRace" class="tdForm">
+          <!-- Subjects -->
+          <label class="tdLabel">Subject</label>
+          <div class="tdSubjectRow">
+            <button
+              type="button"
+              class="tdSubjectBtn tdSubjectBtn--active"
+              data-td-subject="English"
+            >English</button>
+            <button
+              type="button"
+              class="tdSubjectBtn"
+              data-td-subject="Math"
+            >Math</button>
+            <button
+              type="button"
+              class="tdSubjectBtn"
+              data-td-subject="Science"
+            >Science</button>
+            <button
+              type="button"
+              class="tdSubjectBtn"
+              data-td-subject="History"
+            >History</button>
+          </div>
+
+          <!-- Sentence -->
+          <label for="tdRRSentence" class="tdLabel">Sentence</label>
+          <textarea
+            id="tdRRSentence"
+            class="tdInput tdInput--textarea"
+            placeholder="Enter a sentence for students to read..."
+          ></textarea>
+
+          <!-- Buttons -->
+          <div class="tdFormActions">
+            <button
+              type="button"
+              id="tdRRCancel"
+              class="tdBtn tdBtn--ghost"
+            >✖ Cancel</button>
+            <button
+              type="button"
+              id="tdRRSave"
+              class="tdBtn tdBtn--primary"
+            >💾 Save Question</button>
+          </div>
+        </form>
+
+        <!-- QUIZ QUEST FORM (HIDDEN INITIALLY) -->
+        <form id="tdFormQuizQuest" class="tdForm rrHidden">
+          <!-- Subjects -->
+          <label class="tdLabel">Subject</label>
+          <div class="tdSubjectRow">
+            <button
+              type="button"
+              class="tdSubjectBtn tdSubjectBtn--active"
+              data-td-subject="Math"
+            >Math</button>
+            <button
+              type="button"
+              class="tdSubjectBtn"
+              data-td-subject="Science"
+            >Science</button>
+            <button
+              type="button"
+              class="tdSubjectBtn"
+              data-td-subject="English"
+            >English</button>
+            <button
+              type="button"
+              class="tdSubjectBtn"
+              data-td-subject="History"
+            >History</button>
+          </div>
+
+          <!-- Question -->
+          <label for="tdQQQuestion" class="tdLabel">Question</label>
+          <textarea
+            id="tdQQQuestion"
+            class="tdInput tdInput--textarea"
+            placeholder="Enter your question..."
+          ></textarea>
+
+          <!-- Options -->
+          <label class="tdLabel">Answer Options</label>
+
+          <div class="tdOptionRow">
+            <input
+              type="radio"
+              name="tdQQCorrect"
+              id="tdQQCorrect1"
+              checked
+            />
+            <label for="tdQQCorrect1" class="tdOptionRadio"></label>
+            <input
+              id="tdQQOpt1"
+              class="tdInput tdInput--option"
+              type="text"
+              placeholder="Option 1"
+            />
+          </div>
+
+          <div class="tdOptionRow">
+            <input
+              type="radio"
+              name="tdQQCorrect"
+              id="tdQQCorrect2"
+            />
+            <label for="tdQQCorrect2" class="tdOptionRadio"></label>
+            <input
+              id="tdQQOpt2"
+              class="tdInput tdInput--option"
+              type="text"
+              placeholder="Option 2"
+            />
+          </div>
+
+          <div class="tdOptionRow">
+            <input
+              type="radio"
+              name="tdQQCorrect"
+              id="tdQQCorrect3"
+            />
+            <label for="tdQQCorrect3" class="tdOptionRadio"></label>
+            <input
+              id="tdQQOpt3"
+              class="tdInput tdInput--option"
+              type="text"
+              placeholder="Option 3"
+            />
+          </div>
+
+          <div class="tdOptionRow">
+            <input
+              type="radio"
+              name="tdQQCorrect"
+              id="tdQQCorrect4"
+            />
+            <label for="tdQQCorrect4" class="tdOptionRadio"></label>
+            <input
+              id="tdQQOpt4"
+              class="tdInput tdInput--option"
+              type="text"
+              placeholder="Option 4"
+            />
+          </div>
+
+          <p class="tdHintText">
+            Select the radio button for the correct answer.
+          </p>
+
+          <!-- Buttons -->
+          <div class="tdFormActions">
+            <button
+              type="button"
+              id="tdQQCancel"
+              class="tdBtn tdBtn--ghost"
+            >✖ Cancel</button>
+            <button
+              type="button"
+              id="tdQQSave"
+              class="tdBtn tdBtn--primary"
+            >💾 Save Question</button>
+          </div>
+        </form>
+
+        <!-- WORD REVEAL FORM (HIDDEN INITIALLY) -->
+        <form id="tdFormWordReveal" class="tdForm rrHidden">
+          <!-- Subjects -->
+          <label class="tdLabel">Subject</label>
+          <div class="tdSubjectRow">
+            <button
+              type="button"
+              class="tdSubjectBtn tdSubjectBtn--active"
+              data-td-subject="English"
+            >English</button>
+            <button
+              type="button"
+              class="tdSubjectBtn"
+              data-td-subject="Math"
+            >Math</button>
+            <button
+              type="button"
+              class="tdSubjectBtn"
+              data-td-subject="Science"
+            >Science</button>
+            <button
+              type="button"
+              class="tdSubjectBtn"
+              data-td-subject="Animals"
+            >Animals</button>
+          </div>
+
+          <!-- Word -->
+          <label for="tdWRWord" class="tdLabel">Word</label>
+          <input
+            id="tdWRWord"
+            type="text"
+            class="tdInput"
+            placeholder="ENTER THE WORD (LETTERS ONLY)..."
+          />
+
+          <!-- Hint -->
+          <label for="tdWRHint" class="tdLabel">Hint</label>
+          <textarea
+            id="tdWRHint"
+            class="tdInput tdInput--textarea"
+            placeholder="Enter a hint to help students guess the word..."
+          ></textarea>
+
+          <!-- Buttons -->
+          <div class="tdFormActions">
+            <button
+              type="button"
+              id="tdWRCancel"
+              class="tdBtn tdBtn--ghost"
+            >✖ Cancel</button>
+            <button
+              type="button"
+              id="tdWRSave"
+              class="tdBtn tdBtn--primary"
+            >💾 Save Question</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- EXISTING QUESTIONS CARD -->
+      <section class="tdCard tdCard--bottom">
+        <div class="tdCardHeader">
+          <div class="tdCardIcon">📚</div>
+          <h2 class="tdCardTitle">Existing Questions</h2>
+        </div>
+
+        <div id="tdEmptyState" class="tdEmptyState">
+          <div class="tdEmptyIcon">📝</div>
+          <p class="tdEmptyText">
+            No questions added yet. Click
+            <strong>"Add New Question"</strong>
+            to get started!
+          </p>
+        </div>
+
+        <div id="tdQuestionList" class="tdQuestionList">
+          <!-- auto-fill by app.js -->
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- shared JS -->
+  <script src="app.js"></script>
+</body>
+</html>

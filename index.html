@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="tl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartLearn</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="design.css" />
+</head>
+
+<body>
+  <main class="page" id="pageRoot">
+    <section class="hero" id="top">
+      <div class="hero__dots" aria-hidden="true"></div>
+
+      <div class="container hero__inner">
+        <h1 class="hero__title">Welcome to SmartLearn!</h1>
+        <p class="hero__subtitle">
+          Where learning becomes an exciting adventure! Join thousands of students improving their reading,
+          math, and science skills through fun games.
+        </p>
+
+        <article class="bannerCard" role="region" aria-label="Study with SmartChair">
+          <div class="bannerCard__icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" width="56" height="56">
+              <path d="M22 10c0-3 2-5 5-5h10c3 0 5 2 5 5v12H22V10z" fill="#7b3f2a"/>
+              <rect x="18" y="22" width="28" height="10" rx="5" fill="#a75b3b"/>
+              <path d="M20 32h24l4 18c1 5-3 9-8 9H24c-5 0-9-4-8-9l4-18z" fill="#cc7a4a"/>
+              <path d="M22 41h-6l-4 18h8l2-18zm26 0h6l4 18h-8l-2-18z" fill="#7b3f2a"/>
+              <rect x="26" y="33" width="12" height="8" rx="4" fill="#f3c7a4"/>
+            </svg>
+          </div>
+
+          <div class="bannerCard__text">
+            <h2 class="bannerCard__title">Study with SmartChair!</h2>
+            <p class="bannerCard__desc">
+              Connect your SmartChair to SmartLearn for the best learning experience.
+              The smart chair helps you maintain good posture and stay focused while you play and learn!
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="games">
+      <div class="container">
+        <header class="section__header">
+          <div class="section__emoji" aria-hidden="true">🎮</div>
+          <h2 class="section__title">Educational Games</h2>
+          <p class="section__subtitle">Choose your favorite game and start learning!</p>
+        </header>
+
+        <div class="cardGrid cardGrid--3">
+          <article class="bigCard">
+            <div class="bigCard__badge bigCard__badge--blue" aria-hidden="true">
+              <span class="bigCard__badgeIcon">🚗</span>
+            </div>
+            <h3 class="bigCard__title">Reading Race</h3>
+            <p class="bigCard__desc">Race to the finish line by reading sentences!</p>
+            <button class="pillBtn pillBtn--blue" data-action="play" data-slug="reading-race">
+              <span class="pillBtn__icon" aria-hidden="true">▶</span> Play Now!
+            </button>
+          </article>
+
+          <article class="bigCard">
+            <div class="bigCard__badge bigCard__badge--pink" aria-hidden="true">
+              <span class="bigCard__badgeIcon">🎲</span>
+            </div>
+            <h3 class="bigCard__title">Quiz Quest</h3>
+            <p class="bigCard__desc">Answer questions and move forward on the board!</p>
+            <button class="pillBtn pillBtn--pink" data-action="play" data-slug="quiz-quest">
+              <span class="pillBtn__icon" aria-hidden="true">▶</span> Play Now!
+            </button>
+          </article>
+
+          <article class="bigCard">
+            <div class="bigCard__badge bigCard__badge--violet" aria-hidden="true">
+              <span class="bigCard__badgeIcon">🔤</span>
+            </div>
+            <h3 class="bigCard__title">Word Reveal</h3>
+            <p class="bigCard__desc">Guess letters to reveal the mystery word!</p>
+            <button class="pillBtn pillBtn--violet" data-action="play" data-slug="word-reveal">
+              <span class="pillBtn__icon" aria-hidden="true">▶</span> Play Now!
+            </button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="tools">
+      <div class="container">
+        <header class="section__header">
+          <div class="section__emoji" aria-hidden="true">🌟</div>
+          <h2 class="section__title">Learning Tools</h2>
+          <p class="section__subtitle">Enhance your learning experience with these helpful tools!</p>
+        </header>
+
+        <div class="cardGrid cardGrid--2">
+          <!-- Progress card (unchanged) -->
+          <article class="bigCard">
+            <div class="bigCard__badge bigCard__badge--green" aria-hidden="true">
+              <span class="bigCard__badgeIcon">📊</span>
+            </div>
+            <h3 class="bigCard__title">Progress</h3>
+            <p class="bigCard__desc">Track your achievements, badges, and learning progress</p>
+            <a href="progress.html" class="pillBtn pillBtn--green">
+              <span class="pillBtn__icon" aria-hidden="true">➜</span> View
+            </a>
+          </article>
+
+          <!-- ✅ Replaced Settings with Teachers Dashboard -->
+          <article class="bigCard">
+            <div class="bigCard__badge bigCard__badge--orange" aria-hidden="true">
+              <span class="bigCard__badgeIcon">🧑‍🏫</span>
+            </div>
+            <h3 class="bigCard__title">Teachers Dashboard</h3>
+            <p class="bigCard__desc">
+              Teachers can add and manage questions for Reading Race, Quiz Quest, and Word Reveal.
+            </p>
+            <button class="pillBtn pillBtn--orange" data-action="teachers">
+              <span class="pillBtn__icon" aria-hidden="true">➜</span> Open Dashboard
+            </button>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

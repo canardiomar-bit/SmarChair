@@ -1,0 +1,755 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reading Race</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="design.css" />
+</head>
+<body>
+  <style>
+    #pageRoot {
+      --bg-url: url("./background2.png");
+    }
+  </style>
+  <main class="page page--howto rrPage" id="pageRoot">
+    <div class="rrTop">
+      <a class="homePill" href="main.html">
+        <span class="homePill__icon">🏠</span>
+        <span>Home</span>
+      </a>
+      <div class="howTitle rrBrand"><span class="howTitle__emoji">🚗</span><span class="howTitle__text">Reading Race</span></div>
+      <div class="scorePill">Score: <span id="scoreText">0</span></div>
+    </div>
+
+    <section class="rrWrap">
+      <!-- TUTORIAL -->
+      <article class="rrCard" id="screenTutorial">
+        <div class="rrIcon">🎤</div>
+        <h1 class="rrTitle">How to Play Reading Race</h1>
+
+        <div class="rrStepList">
+          <div class="rrStep rrStep--blue">
+            <div class="rrStepNum">1</div>
+            <div><div class="rrStepHead">Choose Your Subject</div><div class="rrStepText">Pick from English, Math, Science, or History to practice different sentences.</div></div>
+          </div>
+          <div class="rrStep rrStep--green">
+            <div class="rrStepNum">2</div>
+            <div>
+              <div class="rrStepHead">Read Aloud</div>
+              <div class="rrStepText">Click the microphone button and read the sentence clearly and loudly.</div>
+            </div>
+          </div>
+          <div class="rrStep rrStep--yellow">
+            <div class="rrStepNum">3</div>
+            <div>
+              <div class="rrStepHead">Speed Up Your Racer</div>
+              <div class="rrStepText">Read correctly to make your racer go faster! The better you read, the faster you go!</div>
+            </div>
+          </div>
+          <div class="rrStep rrStep--violet">
+            <div class="rrStepNum">4</div>
+            <div><div class="rrStepHead">Reach the Finish Line</div><div class="rrStepText">Keep reading sentences to reach 100% and win the race!</div></div>
+          </div>
+        </div>
+
+        <div class="rrMicGate">
+          <div class="rrMicStatus" id="micStatus">Microphone: Checking…</div>
+          <div class="rrMicTip" id="micTip">If asked, click <b>Allow</b> to enable microphone.</div>
+          <button class="playBig playBig--blue rrCta" id="btnGoSubject" type="button">
+            <span class="playBig__icon">▶</span> Continue
+          </button>
+        </div>
+      </article>
+
+      <!-- SUBJECT -->
+      <article class="rrCard rrHidden" id="screenSubject">
+        <div class="rrIcon">🎤</div>
+        <h1 class="rrTitle">Choose Your Subject!</h1>
+        <p class="rrSub">Pick a subject to start!</p>
+
+        <div class="rrSubjects">
+          <button class="rrSubjectBtn" data-subject="English" type="button"><div class="rrSubjectIcon">📚</div><div class="rrSubjectLabel">English</div></button>
+          <button class="rrSubjectBtn" data-subject="Math" type="button"><div class="rrSubjectIcon">🔢</div><div class="rrSubjectLabel">Math</div></button>
+          <button class="rrSubjectBtn" data-subject="Science" type="button"><div class="rrSubjectIcon">🔬</div><div class="rrSubjectLabel">Science</div></button>
+          <button class="rrSubjectBtn" data-subject="History" type="button"><div class="rrSubjectIcon">🏛️</div><div class="rrSubjectLabel">History</div></button>
+        </div>
+      </article>
+
+      <!-- READY -->
+      <article class="rrCard rrCard--compact rrHidden" id="screenReady">
+        <div class="rrIcon" id="readyIcon">📚</div>
+        <h1 class="rrTitle" id="readyTitle">Ready?</h1>
+        <p class="rrSub">Click Start, then read the sentence aloud.</p>
+
+        <button class="playBig playBig--blue rrCta" id="btnStartFromReady" type="button">
+          <span class="playBig__icon">▶</span> Start Reading Race!
+        </button>
+      </article>
+
+      <!-- GAME -->
+      <div class="rrGame rrHidden" id="screenGame">
+        <article class="rrBigCard">
+          <div class="rrBigHeader">
+            <div class="rrBigHeaderLeft">
+              <span class="rrSubjectSmallIcon" id="gameSubjectIcon">📚</span>
+              <span class="rrBigHeaderText" id="gamePrompt">Read this aloud:</span>
+            </div>
+          </div>
+
+          <div class="rrSentence" id="sentenceText">The cat sat on the mat.</div>
+
+          <div class="rrButtonsRow">
+            <button class="rrMicBtn" id="btnMic" type="button">
+              <span class="rrMicIcon">🎙</span>
+              <span id="micText">Start Listening</span>
+
+              <span class="rrListen" id="listenIndicator" aria-hidden="true">
+                <span class="rrDot"></span>
+                <span class="rrBars"><span></span><span></span><span></span><span></span></span>
+                <span class="rrListenText">Listening…</span>
+              </span>
+            </button>
+          </div>
+
+          <div class="rrFeedback" id="feedbackBox" style="text-align:center;">
+            <div class="rrFeedbackTag" id="feedbackTag" style="text-align:center;">—</div>
+
+            <div class="rrHintRow" style="justify-content:center; text-align:center;">
+              <div class="rrMiniLabel" style="min-width:auto; margin-right:10px;">I heard:</div>
+              <div class="rrHeard" id="heardText" style="text-align:center;">—</div>
+            </div>
+
+            <div class="rrDiffWrap" style="justify-content:center;">
+              <div class="rrMiniLabel">Word Check:</div>
+              <div class="rrDiffLine" id="diffLine" style="text-align:center;">—</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="rrProgressCard">
+          <div class="rrProgressTop">
+            <div class="rrMiniTitle">Progress</div>
+            <div class="rrPercent"><span id="percentText">0</span>%</div>
+          </div>
+
+          <div class="rrBar">
+            <div class="rrBarFill" id="barFill"></div>
+            <div class="rrBarDash"></div>
+            <div class="rrCar" id="car">🏎️</div>
+          </div>
+
+          <div class="rrSpeedRow">
+            <div class="rrSpeedLabel">Speed:</div>
+            <div class="rrSpeedBoxes" id="speedBoxes">
+              <div class="rrBox"></div><div class="rrBox"></div><div class="rrBox"></div><div class="rrBox"></div><div class="rrBox"></div>
+            </div>
+          </div>
+        </article>
+
+        <div class="rrFooterBtns">
+          <button class="rrFooterBtn rrPause" id="btnPause" type="button">⏸ Pause</button>
+          <button class="rrFooterBtn rrExit" id="btnExit" type="button">⎋ Exit</button>
+        </div>
+      </div>
+
+      <!-- WIN -->
+      <article class="rrWin rrHidden" id="screenWin">
+        <div class="rrWinCard">
+          <div class="rrTrophy">🏆</div>
+          <h1 class="rrWinTitle">You Won!</h1>
+
+          <div class="rrWinScore">
+            Final Score: <span class="rrStar">⭐</span><span id="finalScore">0</span>
+            <span style="margin-left:8px; font-size:18px;" id="finalStars">—</span>
+          </div>
+
+          <div class="rrWinMsg" id="finalMsg">Great job! 🌟</div>
+
+          <div class="rrWinBtns">
+            <button class="rrWinBtn rrWinBtn--green" id="btnPlayAgain" type="button">⟲ Play Again</button>
+            <a class="rrWinBtn rrWinBtn--violet" href="main.html">⌂ Home</a>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const el = (id) => document.getElementById(id);
+
+      const screenTutorial = el("screenTutorial");
+      const screenSubject  = el("screenSubject");
+      const screenReady    = el("screenReady");
+      const screenGame     = el("screenGame");
+      const screenWin      = el("screenWin");
+
+      const micStatus = el("micStatus");
+      const micTip    = el("micTip");
+
+      const btnGoSubject = el("btnGoSubject");
+      const readyIcon  = el("readyIcon");
+      const readyTitle = el("readyTitle");
+      const btnStartFromReady = el("btnStartFromReady");
+
+      const scoreText   = el("scoreText");
+      const percentText = el("percentText");
+      const barFill     = el("barFill");
+      const car         = el("car");
+      const speedBoxes  = el("speedBoxes");
+
+      const gameSubjectIcon = el("gameSubjectIcon");
+      const gamePrompt      = el("gamePrompt");
+      const sentenceText    = el("sentenceText");
+
+      const btnMic = el("btnMic");
+      const micText = el("micText");
+      const listenIndicator = el("listenIndicator");
+
+      const feedbackBox = el("feedbackBox");
+      const feedbackTag = el("feedbackTag");
+      const heardText   = el("heardText");
+      const diffLine    = el("diffLine");
+
+      const btnPause = el("btnPause");
+      const btnExit  = el("btnExit");
+
+      const finalScore = el("finalScore");
+      const finalMsg   = el("finalMsg");
+      const btnPlayAgain = el("btnPlayAgain");
+
+      const SENTENCES = {
+        // ✅ CHANGED ONLY THIS: English sentences (simple, no everyday/every day, no ran/run)
+        English: [
+          "I see a red ball.",
+          "The sun is bright.",
+          "My dog is big.",
+          "I like ice cream.",
+          "Please sit down.",
+          "This is my book.",
+          "We can play now.",
+          "Open the door."
+        ],
+        Math: [
+          "12 + 5 = 17",
+          "48 ÷ 6 = 8",
+          "9 - 4 = 5",
+          "7 × 3 = 21",
+          "100",
+          "3.5",
+          "25 + 25 = 50",
+          "60 ÷ 10 = 6"
+        ],
+        Science: [
+          "Plants need sunlight to grow.",
+          "Gravity pulls objects down.",
+          "We breathe oxygen to live.",
+          "Rain comes from clouds in the sky."
+        ],
+        History: [
+          "History teaches us about the past.",
+          "Explorers traveled to new lands.",
+          "A map shows places on Earth.",
+          "Artifacts tell us ancient stories."
+        ]
+      };
+
+      // Load custom questions from teacher dashboard
+      function loadTeacherQuestions(subj) {
+        try {
+          const LS_KEY = "studyfirst_questions";
+          const raw = localStorage.getItem(LS_KEY);
+          if (!raw) return SENTENCES[subj] || [];
+          const all = JSON.parse(raw);
+          const filtered = all.filter(q => q.game === "reading-race" && q.subject === subj);
+          if (!filtered.length) return SENTENCES[subj] || [];
+          // Shuffle and take first 10
+          const shuffled = filtered.sort(() => Math.random() - 0.5);
+          return shuffled.slice(0, 10).map(q => q.sentence);
+        } catch (err) {
+          console.warn("Error loading teacher questions:", err);
+          return SENTENCES[subj] || [];
+        }
+      }
+
+      let subject = "English";
+      let list = [];
+      let index = 0;
+      let score = 0;
+      let progress = 0;
+      let paused = false;
+
+      function showOnly(which){
+        [screenTutorial, screenSubject, screenReady, screenGame, screenWin].forEach(s => s.classList.add("rrHidden"));
+        which.classList.remove("rrHidden");
+      }
+
+      function subjectIcon(s){
+        return s === "English" ? "📚" :
+               s === "Math" ? "🔢" :
+               s === "Science" ? "🔬" : "🏛️";
+      }
+
+      function normalize(s){
+        return (s || "")
+          .toLowerCase()
+          .replace(/[^a-z0-9\s\.\+\-\=]/g, "")
+          .replace(/\s+/g, " ")
+          .trim();
+      }
+
+      function canonJoinWords(words){
+        const w = [...words];
+        const joinPairs = new Map([
+          ["every day", "everyday"],
+          ["a lot", "alot"],
+          ["all right", "alright"],
+          ["can not", "cannot"],
+          ["any one", "anyone"],
+          ["some thing", "something"],
+          ["in to", "into"],
+          ["each other", "eachother"],
+        ]);
+
+        const out = [];
+        for (let i = 0; i < w.length; i++){
+          const pair = i < w.length - 1 ? `${w[i]} ${w[i+1]}` : "";
+          if (pair && joinPairs.has(pair)){
+            out.push(joinPairs.get(pair));
+            i++;
+          } else {
+            out.push(w[i]);
+          }
+        }
+        return out;
+      }
+
+      const NUM_WORDS = {
+        "zero":0,"one":1,"two":2,"three":3,"four":4,"five":5,"six":6,"seven":7,"eight":8,"nine":9,
+        "ten":10,"eleven":11,"twelve":12,"thirteen":13,"fourteen":14,"fifteen":15,"sixteen":16,"seventeen":17,"eighteen":18,"nineteen":19,
+        "twenty":20,"thirty":30,"forty":40,"fifty":50,"sixty":60,"seventy":70,"eighty":80,"ninety":90,
+        "hundred":100,"thousand":1000
+      };
+
+      function wordsToNumberTokens(tokens){
+        const out = [];
+        let i = 0;
+        while (i < tokens.length){
+          const t = tokens[i];
+          if (/^\d+(\.\d+)?$/.test(t)) { out.push(t); i++; continue; }
+
+          if (NUM_WORDS.hasOwnProperty(t)){
+            let total = 0;
+            let current = 0;
+            while (i < tokens.length && NUM_WORDS.hasOwnProperty(tokens[i])){
+              const w = tokens[i];
+              const val = NUM_WORDS[w];
+              if (val === 100){
+                current = (current || 1) * 100;
+              } else if (val === 1000){
+                total += (current || 1) * 1000;
+                current = 0;
+              } else {
+                current += val;
+              }
+              i++;
+            }
+            total += current;
+            out.push(String(total));
+            continue;
+          }
+
+          const ops = {
+            "plus":"+",
+            "minus":"-",
+            "equals":"=",
+            "equal":"=",
+            "times":"×",
+            "multiply":"×",
+            "multiplied":"×",
+            "divide":"÷",
+            "divided":"÷",
+            "over":"÷"
+          };
+          if (ops[t]) { out.push(ops[t]); i++; continue; }
+
+          out.push(t);
+          i++;
+        }
+        return out;
+      }
+
+      function toWords(s){
+        const n = normalize(s);
+        const fixed = n
+          .replaceAll("×", " x ")
+          .replaceAll("÷", " / ")
+          .replaceAll("+", " + ")
+          .replaceAll("-", " - ")
+          .replaceAll("=", " = ")
+          .replace(/\s+/g, " ")
+          .trim();
+
+        const raw = fixed ? fixed.split(" ") : [];
+        const joined = canonJoinWords(raw);
+
+        const numFixed = wordsToNumberTokens(joined)
+          .map(t => t === "x" ? "×" : (t === "/" ? "÷" : t));
+
+        return numFixed;
+      }
+
+      function soundex(word){
+        const w = (word || "").toLowerCase().replace(/[^a-z]/g, "");
+        if (!w) return "";
+        const first = w[0].toUpperCase();
+        const map = {
+          b:1,f:1,p:1,v:1,
+          c:2,g:2,j:2,k:2,q:2,s:2,x:2,z:2,
+          d:3,t:3,
+          l:4,
+          m:5,n:5,
+          r:6
+        };
+        let out = first;
+        let prev = map[w[0]] || 0;
+        for (let i=1; i<w.length; i++){
+          const c = w[i];
+          const code = map[c] || 0;
+          if (code !== 0 && code !== prev) out += code;
+          prev = code;
+        }
+        out = out.replace(/0/g,"");
+        return (out + "000").slice(0,4);
+      }
+
+      function wordPhoneticEqual(a, b){
+        if (!a || !b) return false;
+        const isNumOrOp = (x) => /^\d+(\.\d+)?$/.test(x) || ["+","-","=","×","÷"].includes(x);
+        if (isNumOrOp(a) || isNumOrOp(b)) return a === b;
+
+        const A = normalize(a);
+        const B = normalize(b);
+        if (A === B) return true;
+
+        const sa = soundex(A);
+        const sb = soundex(B);
+        if (sa && sb && sa === sb) return true;
+
+        return false;
+      }
+
+      function containsContiguousPhonetic(hWords, tWords){
+        if (!tWords.length) return false;
+        if (hWords.length < tWords.length) return false;
+
+        for (let i=0; i<=hWords.length - tWords.length; i++){
+          let ok = true;
+          for (let j=0; j<tWords.length; j++){
+            if (!wordPhoneticEqual(hWords[i+j], tWords[j])) { ok = false; break; }
+          }
+          if (ok) return true;
+        }
+        return false;
+      }
+
+      function escapeHtml(s){
+        return String(s)
+          .replaceAll("&","&amp;")
+          .replaceAll("<","&lt;")
+          .replaceAll(">","&gt;")
+          .replaceAll('"',"&quot;")
+          .replaceAll("'","&#039;");
+      }
+
+      function renderWordCheck(tWords, hWords){
+        const L = tWords.length;
+        if (!L) { diffLine.textContent = "—"; return; }
+
+        let bestI = 0, bestScore = -1;
+        if (hWords.length >= L){
+          for (let i=0; i<=hWords.length - L; i++){
+            let s = 0;
+            for (let j=0; j<L; j++){
+              if (wordPhoneticEqual(hWords[i+j], tWords[j])) s++;
+            }
+            if (s > bestScore) { bestScore = s; bestI = i; }
+          }
+        }
+
+        const slice = (hWords.length >= L) ? hWords.slice(bestI, bestI + L) : hWords;
+        const html = [];
+
+        for (let j=0; j<L; j++){
+          const exp = tWords[j] ?? "";
+          const heard = slice[j] ?? "";
+          const same = wordPhoneticEqual(heard, exp);
+
+          if (same) html.push(`<span class="rrTok rrTok--ok">${escapeHtml(exp)}</span>`);
+          else {
+            html.push(
+              `<span class="rrTok rrTok--bad">
+                <span class="rrTokExp">${escapeHtml(exp)}</span>
+                <span class="rrTokArrow">→</span>
+                <span class="rrTokHeard">${heard ? escapeHtml(heard) : "∅"}</span>
+              </span>`
+            );
+          }
+        }
+
+        diffLine.innerHTML = html.join(" ");
+      }
+
+      function resetFeedback(){
+        feedbackTag.textContent = "—";
+        feedbackBox.classList.remove("rrFeedback--good","rrFeedback--bad");
+        heardText.textContent = "—";
+        diffLine.textContent = "—";
+      }
+
+      function setSentence(txt){
+        sentenceText.textContent = txt;
+        resetFeedback();
+      }
+
+      function setProgress(p){
+        progress = Math.max(0, Math.min(100, Math.round(p)));
+        percentText.textContent = String(progress);
+        barFill.style.width = progress + "%";
+        car.style.left = `calc(${progress}% - 14px)`;
+      }
+
+      function setSpeed(level){
+        const boxes = [...speedBoxes.children];
+        boxes.forEach((b, i) => b.classList.toggle("rrBox--on", i < level));
+      }
+
+      function resetRun(){
+        list = [...loadTeacherQuestions(subject)];
+        index = 0;
+        score = 0;
+        progress = 0;
+        paused = false;
+
+        scoreText.textContent = "0";
+        setProgress(0);
+        setSpeed(0);
+        setSentence(list[index] || "Read this aloud.");
+      }
+
+      function addScoreOnCorrect(){
+        score += 10;
+        scoreText.textContent = String(score);
+      }
+
+      function moveForward(){
+        const step = Math.max(10, Math.round(100 / list.length));
+        setProgress(progress + step);
+        const sp = Math.min(5, Math.max(1, Math.ceil(progress / 20)));
+        setSpeed(sp);
+
+        index++;
+        if (progress >= 100 || index >= list.length) {
+          finalScore.textContent = String(score);
+          finalMsg.textContent = score >= 60 ? "Excellent! ⭐⭐⭐" : "Great job! 🌟";
+          showOnly(screenWin);
+          try {
+            // Prefer calling shared progress manager when available
+            const runStars = Math.min(3, Math.max(0, Math.floor(score / 30)));
+            const runLevel = 1 + Math.min(5, Math.floor(score / 20));
+            if (window.studyProgress && typeof window.studyProgress.saveResult === 'function') {
+              window.studyProgress.saveResult('reading-race', { won: true, score: score, stars: runStars, level: runLevel });
+              // mark screen as saved so app.js polling doesn't duplicate
+              try { screenWin.dataset.progressSaved = '1'; } catch(e){}
+            } else {
+              // fallback: write minimal shape to localStorage but don't auto-unlock non-first badges
+              const KEY = 'studyfirst_progress';
+              const raw = localStorage.getItem(KEY);
+              const p = raw ? JSON.parse(raw) : { totalScore: 0, stars: 0, gamesPlayed: 0, games: {}, badges: {} };
+              p.totalScore = (p.totalScore || 0) + Number(score || 0);
+              p.gamesPlayed = (p.gamesPlayed || 0) + 1;
+              p.games = p.games || {};
+              p.games['reading-race'] = p.games['reading-race'] || { score: 0, level: 0, stars: 0, played: 0 };
+              p.games['reading-race'].played = (p.games['reading-race'].played || 0) + 1;
+              p.games['reading-race'].score = Math.max(p.games['reading-race'].score || 0, Number(score || 0));
+              p.badges = p.badges || {};
+              if (!p.badges.firstWin) p.badges.firstWin = true;
+              localStorage.setItem(KEY, JSON.stringify(p));
+              try { screenWin.dataset.progressSaved = '1'; } catch(e){}
+            }
+          } catch (e) { console.warn('save readingrace progress', e); }
+          return;
+        }
+        setSentence(list[index]);
+      }
+
+      function updateMicUI(ok){
+        micStatus.textContent = ok ? "Microphone: Ready ✅" : "Microphone: Not allowed ❌";
+        micStatus.classList.toggle("rrMicStatus--bad", !ok);
+        micTip.innerHTML = ok
+          ? "Microphone enabled. Continue."
+          : "Click <b>Allow</b> in browser popup. If Blocked, open site settings and allow microphone.";
+      }
+      async function requestMicPermissionNow(){
+        try { await navigator.mediaDevices.getUserMedia({ audio: true }); updateMicUI(true); }
+        catch(e){ updateMicUI(false); }
+      }
+
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      let recognizer = null;
+      let listening = false;
+      let lastFinalTranscript = "";
+
+      function setListeningUI(on){
+        listenIndicator.classList.toggle("rrListen--on", on);
+      }
+
+      function ensureRecognizer(){
+        if (!SpeechRecognition) return null;
+        if (recognizer) return recognizer;
+
+        const r = new SpeechRecognition();
+        r.lang = "en-US";
+        r.interimResults = true;
+        r.maxAlternatives = 1;
+        r.continuous = true;
+
+        r.onstart = () => {
+          listening = true;
+          micText.textContent = "Stop Listening";
+          btnMic.classList.add("rrMicBtn--on");
+          setListeningUI(true);
+          lastFinalTranscript = "";
+          feedbackTag.textContent = "Listening…";
+          feedbackBox.classList.remove("rrFeedback--good","rrFeedback--bad");
+        };
+
+        r.onend = () => {
+          listening = false;
+          micText.textContent = "Start Listening";
+          btnMic.classList.remove("rrMicBtn--on");
+          setListeningUI(false);
+
+          if (!lastFinalTranscript) {
+            feedbackTag.textContent = "No sound detected — click Start Listening again";
+            feedbackBox.classList.remove("rrFeedback--good");
+            feedbackBox.classList.add("rrFeedback--bad");
+            return;
+          }
+
+          const target = sentenceText.textContent;
+          const tWords = toWords(target);
+          const hWords = toWords(lastFinalTranscript);
+
+          renderWordCheck(tWords, hWords);
+
+          const ok = containsContiguousPhonetic(hWords, tWords);
+
+          if (ok) {
+            feedbackTag.textContent = "Correct ✅";
+            feedbackBox.classList.remove("rrFeedback--bad");
+            feedbackBox.classList.add("rrFeedback--good");
+            addScoreOnCorrect();
+            moveForward();
+          } else {
+            feedbackTag.textContent = "Not matched yet ❌ (Read again when ready)";
+            feedbackBox.classList.remove("rrFeedback--good");
+            feedbackBox.classList.add("rrFeedback--bad");
+          }
+        };
+
+        r.onerror = () => {
+          feedbackTag.textContent = "Microphone error ❌";
+          feedbackBox.classList.remove("rrFeedback--good");
+          feedbackBox.classList.add("rrFeedback--bad");
+        };
+
+        r.onresult = (evt) => {
+          let transcript = "";
+          for (let i = evt.resultIndex; i < evt.results.length; i++){
+            const res = evt.results[i];
+            transcript = res[0]?.transcript || transcript;
+
+            if (subject === "Math"){
+              const numForm = toWords(transcript).join(" ");
+              heardText.textContent = numForm || "—";
+            } else {
+              heardText.textContent = transcript || "—";
+            }
+
+            if (res.isFinal) lastFinalTranscript = transcript || lastFinalTranscript;
+          }
+        };
+
+        recognizer = r;
+        return r;
+      }
+
+      function toggleListening(){
+        if (paused) return;
+        const r = ensureRecognizer();
+        if (!r) { alert("Speech Recognition not supported. Use Google Chrome (desktop)."); return; }
+
+        if (listening) {
+          try { r.stop(); } catch(_) {}
+          return;
+        }
+
+        try { r.start(); }
+        catch(e){
+          try { r.abort(); } catch(_) {}
+          try { r.start(); } catch(_) {}
+        }
+      }
+
+      btnGoSubject.addEventListener("click", () => showOnly(screenSubject));
+
+      document.querySelectorAll(".rrSubjectBtn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          subject = btn.dataset.subject;
+          readyIcon.textContent = subjectIcon(subject);
+          readyTitle.textContent = `Ready for ${subject}?`;
+          showOnly(screenReady);
+        });
+      });
+
+      btnStartFromReady.addEventListener("click", () => {
+        resetRun();
+        gameSubjectIcon.textContent = subjectIcon(subject);
+        gamePrompt.textContent = `${subject} - Read this aloud:`;
+        showOnly(screenGame);
+      });
+
+      btnMic.addEventListener("click", toggleListening);
+
+      btnPause.addEventListener("click", () => {
+        paused = !paused;
+        btnPause.textContent = paused ? "▶ Resume" : "⏸ Pause";
+        if (paused && recognizer && listening) { try { recognizer.stop(); } catch(_) {} }
+      });
+
+      btnExit.addEventListener("click", () => {
+        if (recognizer && listening) { try { recognizer.stop(); } catch(_) {} }
+        showOnly(screenTutorial);
+      });
+
+      btnPlayAgain.addEventListener("click", () => showOnly(screenTutorial));
+
+      showOnly(screenTutorial);
+      if (!navigator.mediaDevices?.getUserMedia) {
+        updateMicUI(false);
+        micTip.innerHTML = "Your browser cannot access microphone. Please use Google Chrome.";
+      } else {
+        requestMicPermissionNow();
+      }
+    })();
+  </script>
+  <script src="app.js"></script>
+</body>
+</html>

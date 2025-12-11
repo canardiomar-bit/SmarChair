@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz Quest</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="design.css" />
+</head>
+<body>
+  <main class="page page--howto" id="pageRoot">
+    <div id="quizQuestRoot">
+      <!-- TOP BAR -->
+      <div class="qqTop">
+        <a class="homePill" href="main.html">
+          <span class="homePill__icon">🏠</span>
+          <span>Home</span>
+        </a>
+
+        <div class="howTitle qqBrand">
+          <span class="howTitle__emoji">🎲</span>
+          <span class="howTitle__text">Quiz Quest</span>
+        </div>
+
+        <div class="qqTopRight">
+          <div class="qqLives" title="Lives" aria-label="Lives" id="qqLives">❤️❤️❤️</div>
+          <div class="scorePill" aria-label="Score">Score: <span id="qqScore">0</span></div>
+        </div>
+      </div>
+
+      <!-- =======================
+           TUTORIAL (STEP 1)
+           ======================= -->
+      <section class="howWrap" id="qqTutorial">
+        <article class="howCard">
+          <div class="howCard__icon" aria-hidden="true">🎯</div>
+          <h1 class="howCard__title">How to Play Quiz Quest</h1>
+
+          <div class="stepList">
+            <div class="step step--blue">
+              <div class="step__num">1</div>
+              <div class="step__body">
+                <div class="step__head">Choose Your Subject</div>
+                <div class="step__text">Pick from Math, Science, English, or History to start your quiz adventure.</div>
+              </div>
+            </div>
+
+            <div class="step step--green">
+              <div class="step__num">2</div>
+              <div class="step__body">
+                <div class="step__head">Answer Questions</div>
+                <div class="step__text">Choose the correct answer (A, B, C, or D).</div>
+              </div>
+            </div>
+
+            <div class="step step--yellow">
+              <div class="step__num">3</div>
+              <div class="step__body">
+                <div class="step__head">Move Forward</div>
+                <div class="step__text">Correct answers move you forward. Wrong answers cost 1 life.</div>
+              </div>
+            </div>
+
+            <div class="step step--violet">
+              <div class="step__num">4</div>
+              <div class="step__body">
+                <div class="step__head">Reach the Trophy</div>
+                <div class="step__text">Finish all 10 questions to win!</div>
+              </div>
+            </div>
+          </div>
+
+          <button class="playBig playBig--pink" data-action="start-game" data-game="Quiz Quest">
+            <span class="playBig__icon">▶</span>
+            Let's Play!
+          </button>
+        </article>
+      </section>
+
+      <!-- =======================
+           SUBJECT SELECT (STEP 2)
+           ======================= -->
+      <section class="howWrap rrHidden" id="qqSubject">
+        <article class="howCard">
+          <div class="howCard__icon" aria-hidden="true">📚</div>
+          <h1 class="howCard__title">Choose Your Subject</h1>
+          <p class="rrSub" style="text-align:center;margin-top:-4px;">Pick a subject to start your quiz adventure!</p>
+
+          <div class="rrSubjects" style="margin-top: 18px;">
+            <button class="rrSubjectBtn" type="button" data-qq-subject="Math">
+              <div class="rrSubjectIcon">🔢</div>
+              <div class="rrSubjectLabel">Math</div>
+            </button>
+
+            <button class="rrSubjectBtn" type="button" data-qq-subject="Science">
+              <div class="rrSubjectIcon">🔬</div>
+              <div class="rrSubjectLabel">Science</div>
+            </button>
+
+            <button class="rrSubjectBtn" type="button" data-qq-subject="English">
+              <div class="rrSubjectIcon">📘</div>
+              <div class="rrSubjectLabel">English</div>
+            </button>
+
+            <button class="rrSubjectBtn" type="button" data-qq-subject="History">
+              <div class="rrSubjectIcon">🏛️</div>
+              <div class="rrSubjectLabel">History</div>
+            </button>
+          </div>
+        </article>
+      </section>
+
+      <!-- =======================
+           GAME (BOARD + QUESTION)
+           ======================= -->
+      <section class="qqGame rrHidden" id="qqGame">
+        <div class="qqBoardCard">
+          <div class="qqSubjectTag" id="qqSubjectTag"></div>
+          <div class="qqProgress" id="qqProgressText">Progress: 0 / 10</div>
+
+          <div class="qqBoardWrap">
+            <div class="qqGrid" id="qqGrid" aria-label="Quiz board"></div>
+
+            <!-- Player token -->
+            <div class="qqPlayer" id="qqPlayer" aria-hidden="true">
+              🧙‍♂️
+            </div>
+          </div>
+        </div>
+
+        <div class="qqQuestionCard">
+          <div class="qqQuestionHeader">
+            <div class="qqPill" id="qqQSubject">Math</div>
+          </div>
+
+          <div class="qqQuestionTitle" id="qqQText">Question here</div>
+
+          <div class="qqChoices" id="qqChoices"></div>
+
+          <button class="playBig qqSubmitBtn" id="qqSubmit" disabled>
+            Submit Answer
+          </button>
+
+          <div class="qqFeedback" id="qqFeedback" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <!-- =======================
+           WIN
+           ======================= -->
+      <section class="rrHidden" id="qqWin">
+        <div class="rrWin">
+          <div class="rrWinConfetti" aria-hidden="true"></div>
+          <div class="rrWinCard">
+            <div class="rrTrophy">🏆</div>
+            <div class="rrWinTitle">You Won!</div>
+            <div class="rrWinScore">Final Score: <span class="rrStar">★</span><span id="qqWinScore">0</span>
+              <span style="margin-left:8px; font-size:18px;" id="qqWinStars">—</span>
+            </div>
+            <div class="rrWinMsg">Great job! You finished all 10 questions!</div>
+
+            <div class="rrWinBtns">
+              <button class="rrWinBtn rrWinBtn--green" type="button" data-qq-play-again="1">⟲ Play Again</button>
+              <a class="rrWinBtn rrWinBtn--violet" href="main.html">⌂ Home</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =======================
+           TRY AGAIN (Score 0)
+           ======================= -->
+      <section class="rrHidden" id="qqTryAgain">
+        <div class="rrWin">
+          <div class="rrWinCard">
+            <div class="rrTrophy">💥</div>
+            <div class="rrWinTitle">Try Again</div>
+            <div class="rrWinScore">Score: <span class="rrStar">★</span><span id="qqTryAgainScore">0</span>
+              <span style="margin-left:8px; font-size:18px;" id="qqTryAgainStars">—</span>
+            </div>
+            <div class="rrWinMsg">You ran out of lives. Better luck next time!</div>
+
+            <div class="rrWinBtns">
+              <a class="rrWinBtn rrWinBtn--violet" href="main.html">⌂ Home</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =======================
+           GOOD JOB (Score 1-5)
+           ======================= -->
+      <section class="rrHidden" id="qqGoodJob">
+        <div class="rrWin">
+          <div class="rrWinCard">
+            <div class="rrTrophy">😊</div>
+            <div class="rrWinTitle">Good Job</div>
+            <div class="rrWinScore">Score: <span class="rrStar">★</span><span id="qqGoodJobScore">0</span>
+              <span style="margin-left:8px; font-size:18px;" id="qqGoodJobStars">—</span>
+            </div>
+            <div class="rrWinMsg">Good job! You finished the run — keep practicing!</div>
+
+            <div class="rrWinBtns">
+              <a class="rrWinBtn rrWinBtn--violet" href="main.html">⌂ Home</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =======================
+           VERY GOOD (Score 6-9)
+           ======================= -->
+      <section class="rrHidden" id="qqVeryGood">
+        <div class="rrWin">
+          <div class="rrWinConfetti" aria-hidden="true"></div>
+          <div class="rrWinCard">
+            <div class="rrTrophy">⭐</div>
+            <div class="rrWinTitle">Very Good</div>
+            <div class="rrWinScore">Final Score: <span class="rrStar">★</span><span id="qqVeryGoodScore">0</span>
+              <span style="margin-left:8px; font-size:18px;" id="qqVeryGoodStars">—</span>
+            </div>
+            <div class="rrWinMsg">Excellent work! You answered most questions correctly!</div>
+
+            <div class="rrWinBtns">
+              <button class="rrWinBtn rrWinBtn--green" type="button" data-qq-play-again="1">⟲ Play Again</button>
+              <a class="rrWinBtn rrWinBtn--violet" href="main.html">⌂ Home</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

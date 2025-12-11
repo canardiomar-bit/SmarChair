@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Word Reveal</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="design.css" />
+</head>
+<body>
+  <main class="page page--howto" id="pageRoot">
+    <!-- ROOT GUARD -->
+    <div id="wordRevealRoot"></div>
+
+    <!-- TOP BAR (game style like your screenshot) -->
+    <div class="wrTop">
+      <a class="homePill" href="main.html">
+        <span class="homePill__icon">🏠</span>
+        <span>Home</span>
+      </a>
+
+      <div class="howTitle wrBrand">
+        <span class="howTitle__emoji">🔤</span>
+        <span class="howTitle__text">Word Reveal</span>
+      </div>
+
+      <div class="wrTopRight">
+        <div class="scorePill">Score: <span id="wrScore">0</span></div>
+        <div class="scorePill">Words: <span id="wrWords">0</span></div>
+        <div class="wrLivesPill" id="wrLives" aria-label="Lives">❤️❤️❤️</div>
+      </div>
+    </div>
+
+    <!-- ============ TUTORIAL ============ -->
+    <section class="howWrap rrHidden" id="wrTutorial">
+      <article class="howCard">
+        <div class="howCard__icon" aria-hidden="true">abc</div>
+        <h1 class="howCard__title">How to Play Word Reveal</h1>
+
+        <div class="stepList">
+          <div class="step step--blue">
+            <div class="step__num">1</div>
+            <div class="step__body">
+              <div class="step__head">Choose Your Subject</div>
+              <div class="step__text">Pick English, Math, Science, or Animals.</div>
+            </div>
+          </div>
+
+          <div class="step step--green">
+            <div class="step__num">2</div>
+            <div class="step__body">
+              <div class="step__head">Read the Hint</div>
+              <div class="step__text">A clue will guide you to guess the word.</div>
+            </div>
+          </div>
+
+          <div class="step step--yellow">
+            <div class="step__num">3</div>
+            <div class="step__body">
+              <div class="step__head">Guess Letters</div>
+              <div class="step__text">Click letters to reveal the mystery word.</div>
+            </div>
+          </div>
+
+          <div class="step step--pink">
+            <div class="step__num">4</div>
+            <div class="step__body">
+              <div class="step__head">Wrong Guesses</div>
+              <div class="step__text">You only have <b>3</b> wrong guesses per word. Each wrong guess consumes 1 life.</div>
+            </div>
+          </div>
+        </div>
+
+        <button class="playBig playBig--violet" data-action="start-game" data-game="Word Reveal">
+          <span class="playBig__icon">▶</span>
+          Let's Play!
+        </button>
+      </article>
+    </section>
+
+    <!-- ============ SUBJECT PICK (same vibe as your screenshot) ============ -->
+    <section class="wrWrap rrHidden" id="wrSubject">
+      <article class="wrCard">
+        <div class="wrHeroIcon" aria-hidden="true">🎯</div>
+        <h1 class="wrTitle">Choose Your Subject!</h1>
+        <p class="wrSub">Pick a subject to start revealing words!</p>
+
+        <div class="wrSubjects">
+          <button class="wrSubjectBtn" type="button" data-wr-subject="English">
+            <div class="wrSubjectIcon">📚</div>
+            <div class="wrSubjectLabel">English</div>
+            <div class="wrSubjectDesc">Learn vocabulary</div>
+          </button>
+
+          <button class="wrSubjectBtn" type="button" data-wr-subject="Math">
+            <div class="wrSubjectIcon">🔢</div>
+            <div class="wrSubjectLabel">Math</div>
+            <div class="wrSubjectDesc">Math terms</div>
+          </button>
+
+          <button class="wrSubjectBtn" type="button" data-wr-subject="Science">
+            <div class="wrSubjectIcon">🔬</div>
+            <div class="wrSubjectLabel">Science</div>
+            <div class="wrSubjectDesc">Science words</div>
+          </button>
+
+          <button class="wrSubjectBtn" type="button" data-wr-subject="Animals">
+            <div class="wrSubjectIcon">🦁</div>
+            <div class="wrSubjectLabel">Animals</div>
+            <div class="wrSubjectDesc">Animal names</div>
+          </button>
+        </div>
+      </article>
+    </section>
+
+    <!-- ============ GAME ============ -->
+    <section class="wrGame rrHidden" id="wrGame">
+      <article class="wrBigCard">
+        <!-- progress dots (10) -->
+        <div class="wrDots" id="wrDots" aria-label="Progress"></div>
+
+        <div class="wrHeader">
+          <div class="wrFace" id="wrFace" aria-hidden="true">😊</div>
+          <div class="wrWrongLabel">
+            Wrong Guesses: <b><span id="wrWrong">0</span> / 3</b>
+          </div>
+          <div class="wrWrongDots" id="wrWrongDots" aria-hidden="true"></div>
+        </div>
+
+        <!-- hint -->
+        <div class="wrHintCard">
+          <div class="wrHintTitle">💡 Hint:</div>
+          <div class="wrHintText" id="wrHintText">—</div>
+        </div>
+
+        <!-- word -->
+        <div class="wrWord" id="wrWord"></div>
+        <div class="wrLettersCount" id="wrLettersCount">0 letters</div>
+
+        <!-- keyboard -->
+        <div class="wrKeyboard" id="wrKeyboard"></div>
+
+        <div class="wrFeedback" id="wrFeedback"></div>
+
+        <div class="wrFooterBtns">
+          <button class="rrFooterBtn rrPause" type="button" id="wrSkip">Skip Word</button>
+          <button class="rrFooterBtn rrExit" type="button" id="wrExit">Exit</button>
+        </div>
+      </article>
+    </section>
+
+    <!-- ============ WIN ============ -->
+    <section class="rrWin rrHidden" id="wrWin">
+      <article class="rrWinCard">
+        <div class="rrTrophy">🏆</div>
+        <div class="rrWinTitle">Great Job!</div>
+        <div class="rrWinScore">Score: <span id="wrWinScore">0 / 10</span>
+          <span style="margin-left:8px; font-size:18px;" id="wrWinStars">—</span>
+        </div>
+        <div class="rrWinMsg">You finished 10 words!</div>
+        <div class="rrWinBtns">
+          <button class="rrWinBtn rrWinBtn--violet" type="button" data-wr-play-again>
+            🔁 Play Again
+          </button>
+          <a class="rrWinBtn rrWinBtn--green" href="main.html">🏠 Home</a>
+        </div>
+      </article>
+    </section>
+
+    <!-- ============ LOSE ============ -->
+    <section class="rrWin rrHidden" id="wrLose">
+      <article class="rrWinCard">
+        <div class="rrTrophy">💔</div>
+        <div class="rrWinTitle">Game Over</div>
+        <div class="rrWinScore">Score: <span id="wrLoseScore">0 / 10</span>
+          <span style="margin-left:8px; font-size:18px;" id="wrLoseStars">—</span>
+        </div>
+        <div class="rrWinMsg">You ran out of lives!</div>
+        <div class="rrWinBtns">
+          <button class="rrWinBtn rrWinBtn--violet" type="button" data-wr-play-again>
+            🔁 Try Again
+          </button>
+          <a class="rrWinBtn rrWinBtn--green" href="main.html">🏠 Home</a>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

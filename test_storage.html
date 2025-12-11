@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Storage</title>
+</head>
+<body>
+  <h1>Storage Test</h1>
+  <button onclick="checkStorage()">Check Storage</button>
+  <button onclick="clearStorage()">Clear Storage</button>
+  <pre id="output"></pre>
+  
+  <script>
+    function checkStorage() {
+      const data = JSON.parse(localStorage.getItem('studyfirst_questions') || '[]');
+      const output = document.getElementById('output');
+      
+      // Count by game and subject
+      const counts = {};
+      data.forEach(q => {
+        if (!counts[q.game]) counts[q.game] = {};
+        if (!counts[q.game][q.subject]) counts[q.game][q.subject] = 0;
+        counts[q.game][q.subject]++;
+      });
+      
+      let text = `Total questions: ${data.length}\n\n`;
+      text += `Breakdown by game and subject:\n`;
+      
+      for (const game in counts) {
+        text += `\n${game}:\n`;
+        for (const subject in counts[game]) {
+          text += `  ${subject}: ${counts[game][subject]} questions\n`;
+        }
+      }
+      
+      output.textContent = text;
+    }
+    
+    function clearStorage() {
+      localStorage.removeItem('studyfirst_questions');
+      alert('Storage cleared!');
+      location.reload();
+    }
+  </script>
+</body>
+</html>
